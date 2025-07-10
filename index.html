@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html lang="es">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Cuenta atrás - El Juego del Calamar</title>
+    <style>
+      @import url("https://fonts.googleapis.com/css2?family=Squada+One&display=swap");
+
+      body {
+        margin: 0;
+        padding: 0;
+        font-family: "Squada One", sans-serif;
+        background-color: #0d0d0d;
+        color: #ff4c4c;
+        height: 100vh;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+      }
+
+      .container {
+        text-align: center;
+        background: rgba(255, 255, 255, 0.05);
+        padding: 40px;
+        border-radius: 10px;
+        border: 2px solid #ff4c4c;
+        box-shadow: 0 0 20px #ff4c4c;
+      }
+
+      h1 {
+        font-size: 3em;
+        margin-bottom: 20px;
+        color: #ff4c4c;
+      }
+
+      .countdown {
+        margin-top: 30px;
+        display: flex;
+        justify-content: center;
+        gap: 20px;
+        flex-wrap: wrap;
+      }
+
+      .time {
+        background: #1a1a1a;
+        padding: 20px;
+        border-radius: 10px;
+        border: 2px solid #ff4c4c;
+        box-shadow: 0 0 10px #ff4c4c;
+        font-size: 2em;
+        min-width: 100px;
+      }
+
+      .time span {
+        display: block;
+        margin-top: 10px;
+        font-size: 0.5em;
+        color: #ffffff;
+      }
+
+      .finished {
+        font-size: 2em;
+        color: #00ff00;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="container">
+      <h1>🦑 El Juego del Calamar 🦑</h1>
+      <div id="countdown" class="countdown"></div>
+    </div>
+
+    <script>
+      /**
+       * 🟢 CONFIGURA AQUÍ LA FECHA Y HORA
+       * Formato: 'YYYY-MM-DDTHH:MM:SS'
+       * Ejemplo: '2025-12-31T23:59:59'
+       */
+      const fechaObjetivo = "2025-12-31T23:59:59";
+
+      const countdownDate = new Date(fechaObjetivo).getTime();
+      const countdownEl = document.getElementById("countdown");
+
+      const interval = setInterval(() => {
+        const now = new Date().getTime();
+        const distance = countdownDate - now;
+
+        if (distance < 0) {
+          clearInterval(interval);
+          countdownEl.innerHTML =
+            "<span class='finished'>¡El tiempo ha terminado!</span>";
+        } else {
+          const days = Math.floor(distance / (1000 * 60 * 60 * 24));
+          const hours = Math.floor(
+            (distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60)
+          );
+          const minutes = Math.floor(
+            (distance % (1000 * 60 * 60)) / (1000 * 60)
+          );
+          const seconds = Math.floor((distance % (1000 * 60)) / 1000);
+
+          countdownEl.innerHTML = `
+          <div class="time">${days}<span>Días</span></div>
+          <div class="time">${hours}<span>Horas</span></div>
+          <div class="time">${minutes}<span>Minutos</span></div>
+          <div class="time">${seconds}<span>Segundos</span></div>
+        `;
+        }
+      }, 1000);
+    </script>
+  </body>
+</html>
